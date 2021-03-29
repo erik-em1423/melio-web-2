@@ -8,17 +8,32 @@ import axios from 'axios';
 
 import RCard from './Components/CardComponent/Card';
 import Product from './Model/Product';
+import RNavBar from './Components/RNavBarComponent/RNavBar'
 import './App.css';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
+
 function App() {
 
   const [data, setData] = useState([]);
 
-  var test_list = [1,2,3];
-
+  var shopping_cart = [];
+  function add_to_cart(product) {
+    var already_added_product = shopping_cart.filter(e => e.product.name === product.name);
+    console.log(JSON.stringify(already_added_product));
+    if(already_added_product.length === 0)
+    {
+      shopping_cart.push({ "product": product, count: 1 });
+    }
+    else
+    {
+      already_added_product[0].count = already_added_product[0].count + 1;
+    }
+    
+    console.log(shopping_cart);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -65,12 +80,13 @@ function App() {
   return (
     <BrowserRouter>
       <div>
+        <RNavBar shopping_cart={shopping_cart}></RNavBar>
         <p>hello!</p>
         <Container>
           <Row>
             {
               data.map(el => (
-                <div><RCard product={el} /></div>
+                <div><RCard product={el} add_to_cart = {add_to_cart} /></div>
               ))
             }
           </Row>
