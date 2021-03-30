@@ -12,6 +12,15 @@ import testUtils from 'react-dom/test-utils';
 
 function RCard(props) {
     var add_to_cart = props.add_to_cart;
+    const shopping_cart = props.shopping_cart;
+    const [count, setCount] = useState(0);
+
+    function updateMyCount() 
+    {
+        var my_product = props.shopping_cart.filter((e) => e.product.name == props.product.name)[0];
+        setCount(my_product?.count);
+    }
+
     return (
             <Card style={{ width: '18rem' }}>
                 <Card.Body>
@@ -20,7 +29,11 @@ function RCard(props) {
                         {props.product.description}
     </Card.Text>
                     <Card.Text >{props.product.price} €</Card.Text>
-                <Button variant="primary" onClick={() => add_to_cart(props.product)}>Add to cart</Button>
+                    <Card.Text>{count}</Card.Text>
+                <Button variant="primary" onClick={() => {
+                    add_to_cart(props.product);
+                    updateMyCount();
+                }}>Add to cart</Button>
                 </Card.Body>
             </Card>
     );

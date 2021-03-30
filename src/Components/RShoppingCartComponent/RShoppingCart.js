@@ -1,5 +1,5 @@
-import { Modal, Button } from 'react-bootstrap'
-
+import { Modal, Button } from 'react-bootstrap';
+import RShoppingCartItem from '../ShoppingCartItemComponent/ShoppingCartItem';
 function RShoppingCart(props) 
 {
     return(
@@ -7,7 +7,11 @@ function RShoppingCart(props)
             <ul>
                 {
                 props.shopping_cart.map(e =>  (
-                    <li>{e.product.name} : Count: {e.count}</li>
+                    <RShoppingCartItem add_to_cart={props.add_to_cart}
+                    product_with_count={e} 
+                    remove_one_from_cart={props.remove_one_from_cart}
+                        onCartItemCountChanged={props.onCartItemCountChanged}
+                    ></RShoppingCartItem>
                 ))
                 }
             </ul>

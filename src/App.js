@@ -16,23 +16,34 @@ import Row from 'react-bootstrap/Row';
 
 
 function App() {
-
+  
   const [data, setData] = useState([]);
 
-  var shopping_cart = [];
+
+  const [shopping_cart, set_shopping_cart] = useState([]);
+  
   function add_to_cart(product) {
+    // check if product already in cart
     var already_added_product = shopping_cart.filter(e => e.product.name === product.name);
-    console.log(JSON.stringify(already_added_product));
+
     if(already_added_product.length === 0)
     {
+      // new product in cart
       shopping_cart.push({ "product": product, count: 1 });
     }
     else
     {
+      // increment amount of product already in cart
       already_added_product[0].count = already_added_product[0].count + 1;
     }
-    
-    console.log(shopping_cart);
+  }
+
+  function remove_one_from_cart(product) {
+    var product_in_cart = shopping_cart.filter(e => e.product.name === product.name);
+    if(product_in_cart.length === 1)
+    {
+      product_in_cart[0].count = product_in_cart[0].count - 1;
+    }
   }
 
   useEffect(() => {
@@ -76,21 +87,22 @@ function App() {
 
   }
 
-
   return (
     <BrowserRouter>
       <div>
-        <RNavBar shopping_cart={shopping_cart}></RNavBar>
-        <p>hello!</p>
-        <Container>
-          <Row>
-            {
-              data.map(el => (
-                <div><RCard product={el} add_to_cart = {add_to_cart} /></div>
-              ))
-            }
-          </Row>
-        </Container>
+        
+          <RNavBar shopping_cart={shopping_cart} add_to_cart={add_to_cart}
+          remove_one_from_cart={remove_one_from_cart}></RNavBar>
+          <Container>
+            <Row>
+              {
+                data.map(el => (
+                  <div><RCard product={el} add_to_cart = {add_to_cart}
+                  shopping_cart={shopping_cart} /></div>
+                ))
+              }
+            </Row>
+          </Container>
       </div>
     </BrowserRouter>
 
