@@ -1,6 +1,6 @@
 import { Nav, Navbar, Button, Modal, Badge } from 'react-bootstrap'
 
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useReducer} from 'react'
 
 import RShoppingCart from '../RShoppingCartComponent/RShoppingCart'
 
@@ -54,7 +54,7 @@ function RNavBar(props)
                     <RShoppingCart shopping_cart={props.shopping_cart} add_to_cart={props.add_to_cart}
                     remove_one_from_cart={props.remove_one_from_cart}
                     onCartItemCountChanged={onCartItemCountChanged} ></RShoppingCart>
-                    {sumCount}
+                    Total number of products: {sumCount}
                 </Modal.Body>
 
                 <Modal.Footer>

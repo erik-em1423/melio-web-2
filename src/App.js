@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import ReadData from './read_data.js'
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useReducer } from 'react';
 import axios from 'axios';
 
 import RCard from './Components/CardComponent/Card';
@@ -19,6 +19,7 @@ function App() {
   
   const [data, setData] = useState([]);
 
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   const [shopping_cart, set_shopping_cart] = useState([]);
   
@@ -36,6 +37,7 @@ function App() {
       // increment amount of product already in cart
       already_added_product[0].count = already_added_product[0].count + 1;
     }
+    forceUpdate();
   }
 
   function remove_one_from_cart(product) {
@@ -44,6 +46,7 @@ function App() {
     {
       product_in_cart[0].count = product_in_cart[0].count - 1;
     }
+    forceUpdate();
   }
 
   useEffect(() => {
